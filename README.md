@@ -20,7 +20,7 @@ Table Creation: Created tables for branches, employees, members, books, issued s
 
 -- Library managment systerm project 2
 
-***creating Database and managing tables**
+***Creating Database and managing tables**
 
 
 
@@ -101,7 +101,7 @@ return_book_isbn varchar(25)
 
 
 
-**-- foreign key**
+**-- Foreign key**
 alter table issued_status
 add constraint fk_members
  foreign key (issued_member_id)
@@ -143,7 +143,7 @@ issued_id);
 
 
 
-**performing CRUD operations**
+**Performing CRUD operations**
 
 
 **-- Task 1. Create a New Book Record -- "978-1-60129-456-2', 'To Kill a Mockingbird',
