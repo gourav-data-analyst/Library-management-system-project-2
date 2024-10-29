@@ -21,8 +21,11 @@ Table Creation: Created tables for branches, employees, members, books, issued s
 ***creating and managing tables**
 
 '''SQL
+
 create database sql_project_p2; 
 use sql_project_p2;
+
+
 '''
 
 create table branch(
