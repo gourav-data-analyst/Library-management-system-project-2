@@ -6,6 +6,9 @@ Database: sql_project_p2**
 
 
 
+![library_erd](https://github.com/user-attachments/assets/7c7f8658-0a1a-43f6-b288-b2b3e3bf426c)
+
+
 This project demonstrates the implementation of a Library Management System using SQL. It includes creating and managing tables, performing CRUD operations, and executing advanced SQL queries. The goal is to showcase skills in database design, manipulation, and querying.
 
 
