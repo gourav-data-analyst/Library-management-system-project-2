@@ -4,7 +4,6 @@
 Level: Intermediate
 Database: sql_project_p2**
 
-Uploading DALL·E 2024-10-29 17.22.31 - A peaceful, well-lit library interior with tall wooden bookshelves filled with books, soft warm lighting, and cozy seating areas. Large windows let in.webp…
 
 
 This project demonstrates the implementation of a Library Management System using SQL. It includes creating and managing tables, performing CRUD operations, and executing advanced SQL queries. The goal is to showcase skills in database design, manipulation, and querying.
@@ -110,9 +109,10 @@ issued_id);
 **performing CRUD operations**
 
 
--- Task 1. Create a New Book Record -- "978-1-60129-456-2', 'To Kill a Mockingbird',
---  'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
+**-- Task 1. Create a New Book Record -- "978-1-60129-456-2', 'To Kill a Mockingbird',
+--  'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')**
 
+'''sql
 insert into books ( isbn ,
 book_title,
 category ,	
@@ -121,10 +121,12 @@ status ,
 author,
 publisher  ) values ( '978-1-60129-456-2', 'To Kill a Mockingbird',
 'Classic', 6.00 , 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
+'''
 
 
 -- Task 2: Update an Existing Member's Address
 
+'''sql
 update Members
 set member_address ='bangalore data street 786'
 where member_id= 'c101';
@@ -134,52 +136,63 @@ where member_id= 'c101';
 
 delete from  Issued_Status
 where issued_id = 'IS107';
+'''
 
 
 -- Task 4: Retrieve All Books Issued by a Specific Employee 
 -- -- Objective: Select all books issued by the employee with emp_id = 'E101'.
 
-
+'''sql
 select issued_book_name from issued_status
 where issued_emp_id = 'E101';
+'''
 
 -- Task 5: List Members Who Have Issued More Than One Book
 --  -- Objective: Use GROUP BY to find members who have issued more than one book.
 
 
+'''sql
 select
     issued_emp_id,
     COUNT(*)
 from  issued_status
 group by issued_emp_id
 Having COUNT(*) > 1;
+'''
 
 -- Task 6: Create Summary Tables: Used CTAS to generate new tables based on query results
 --   each book and total book_issued_cnt**
- 
+
+ '''sql
 create table books_issues
 as(
 select books.isbn,books.book_title, count(issued_status.issued_id) as total_book_issued from books 
 join issued_status on  issued_status.issued_book_isbn=books.isbn
 group by 1,2) ;
+'''
 
 -- Task 7. Retrieve All Books in a Specific Category:
 
-
+'''sql
 select *  from books
 where category='classic';
+'''
 
 -- Task 8 By each category retrive total no. of books
 
+'''sql
 select books.category, count(books.isbn) from books
 group by 1;
+'''
 
 -- Task 9: Find Total Rental Income by Category:
 
+'''sql
 select books.category, (sum(books.rental_price)*count(issued_status.issued_id)) as income_by_category  from books
 join issued_status on issued_status.issued_book_isbn =books.isbn
 group by books.category
 order by income_by_category desc;
+'''
 
 
 -- List Members Who Registered in the Last 180 Days:
