@@ -16,14 +16,20 @@ This project demonstrates the implementation of a Library Management System usin
 Table Creation: Created tables for branches, employees, members, books, issued status, and return status. Each table includes relevant columns and relationships.
 
 
+
+
 -- Library managment systerm project 2
 
 ***creating Database and managing tables**
 
 
 
+
+
 create database sql_project_p2; 
 use sql_project_p2;
+
+
 
 
 
@@ -35,6 +41,8 @@ branch_address  varchar(20),
 contact_no varchar(20)
 );
 
+
+
 drop table  IF exists employees;
 
 create table employees (
@@ -44,6 +52,8 @@ position varchar(15),
 salary int,
 branch_id varchar(25)
 );
+
+
 
 create table books(
 isbn varchar(25) primary key ,
@@ -55,12 +65,17 @@ author  varchar(25),
 publisher varchar(55)
 );
 
+
+
 create table Members(
 member_id varchar(10) primary key ,
 member_name varchar(55),
 member_address varchar(75),
 reg_date date
 );
+
+
+
 
 create table issued_status(
 issued_id varchar(10) primary key ,
@@ -84,16 +99,24 @@ return_book_isbn varchar(25)
 );
 
 
+
+
 **-- foreign key**
 alter table issued_status
 add constraint fk_members
  foreign key (issued_member_id)
  references Members(member_id);
+
+
+
  
  alter table issued_status
 add constraint fk_books
  foreign key (issued_book_isbn)
  references books(isbn);
+
+
+
  
  alter table issued_status
 add constraint fk_empoyees
@@ -101,23 +124,31 @@ add constraint fk_empoyees
  references employees (
 emp_id);
 
+
+
 alter table employees
 add constraint fk_branch
  foreign key (branch_id)
  references branch (
 branch_id);
  
+
+
  alter table return_status
 add constraint fk_issued_status
  foreign key (issued_id)
  references issued_status (
 issued_id);
 
+
+
+
 **performing CRUD operations**
 
 
 **-- Task 1. Create a New Book Record -- "978-1-60129-456-2', 'To Kill a Mockingbird',
 --  'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')**
+
 
 
 insert into books ( isbn ,
@@ -132,12 +163,17 @@ publisher  ) values ( '978-1-60129-456-2', 'To Kill a Mockingbird',
 
 
 
+
+
 **-- Task 2: Update an Existing Member's Address**
 
 
 update Members
 set member_address ='bangalore data street 786'
 where member_id= 'c101';
+
+
+
 
 **-- Task 3: Delete a Record from the Issued Status Table --
 --  Objective: Delete the record with issued_id = 'IS121' from the issued_status table.**
@@ -147,12 +183,17 @@ where issued_id = 'IS107';
 
 
 
+
+
 **-- Task 4: Retrieve All Books Issued by a Specific Employee 
 -- -- Objective: Select all books issued by the employee with emp_id = 'E1**01'.
 
 
 select issued_book_name from issued_status
 where issued_emp_id = 'E101';
+
+
+
 
 
 **-- Task 5: List Members Who Have Issued More Than One Book
@@ -167,6 +208,8 @@ group by issued_emp_id
 Having COUNT(*) > 1;
 
 
+
+
 **-- Task 6: Create Summary Tables: Used CTAS to generate new tables based on query results
 --   each book and total book_issued_cnt****
 
@@ -177,10 +220,15 @@ select books.isbn,books.book_title, count(issued_status.issued_id) as total_book
 join issued_status on  issued_status.issued_book_isbn=books.isbn
 group by 1,2) ;
 
+
+
+
 **Task 7. Retrieve All Books in a Specific Category:**
 
 select *  from books
 where category='classic';
+
+
 
 
 **Task 8 By each category retrive total no. of books**
@@ -190,6 +238,9 @@ select books.category, count(books.isbn) from books
 group by 1;
 
 
+
+
+
 **Task 9: Find Total Rental Income by Category:**
 
 
@@ -197,6 +248,8 @@ select books.category, (sum(books.rental_price)*count(issued_status.issued_id)) 
 join issued_status on issued_status.issued_book_isbn =books.isbn
 group by books.category
 order by income_by_category desc;
+
+
 
 
 
@@ -216,6 +269,9 @@ WHERE reg_date >= DATE_SUB(CURDATE(), INTERVAL 180 DAY);
  on branch.manager_id = e2.emp_id
 ;
 
+
+
+
 **Task 11. Create a Table of Books with Rental Price Above a Certain Threshold:**
 
 create table books_rental_Threshold as
@@ -224,11 +280,15 @@ where rental_price > 7.00;
 
 
 
+
+
 **Task 12: Retrieve the List of Books Not Yet Returned**
 
 select issued_status.issued_id,return_status.return_id,  issued_status.issued_book_name from issued_status
 left join return_status on issued_status.issued_id=return_status.issued_id
 where return_status.return_id is null ;
+
+
 
 
 **-- Task 13: Identify Members with Overdue Books**
@@ -246,6 +306,9 @@ join books on books.isbn= issued_status.issued_book_isbn
 left join return_status  on return_status.issued_id=issued_status.issued_id
 where return_status.return_date is null  And  current_date()-issued_status.issued_date  > 30
 order by 1;
+
+
+
 
 
 
@@ -270,6 +333,9 @@ where isbn='978-0-451-52994-2';
 select * from return_status
 where issued_id='IS130';
 
+
+
+
 **---
 -- if returned add entry into Return table**
 
@@ -282,6 +348,9 @@ where issued_id='IS130';
 update books
 set status='yes'
 where isbn='978-0-451-52994-2';
+
+
+
 
 
 DELIMITER 
@@ -316,9 +385,16 @@ call book_status_record('RS120', 'IS135' ,CURDATE());
 
 
 
+
+
+
+
 **-- Task 15: Branch Performance Report
 -- Create a query that generates a performance report for each branch, 
 -- showing the number of books issued, the number of books returned, and the total revenue generated from book rental**
+
+
+
 
 
 
@@ -331,6 +407,9 @@ join books on books.isbn=issued_status.issued_book_isbn
 group by 1,2 ;
 
 select * from branch_reports;
+
+
+
 
 
 **Task 16: CTAS: Create a Table of Active Members
@@ -351,6 +430,9 @@ where  member_id IN (SELECT
 
 SELECT * FROM active_members;
 
+
+
+
 **-- Task 17: Find Employees with the Most Book Issues Processed
 -- Write a query to find the top 3 employees who have processed the most book issues.
 --  Display the employee name, number of books processed, and their branch.**
@@ -367,6 +449,7 @@ limit 3;
 
 
 
+
 **-- Task 18: Stored Procedure Objective: Create a stored procedure to manage the status of books in a library system. 
 -- Description: Write a stored procedure that updates the status of a book in the library based on its issuance. 
 -- The procedure should function as follows: The stored procedure should take the book_id as an input parameter. 
@@ -374,6 +457,8 @@ limit 3;
 --  If the book is available, it should be issued, and the status in the books table should be updated to 'no'.
 --  If the book is not available (status = 'no'), 
 --  the procedure should return an error message indicating that the book is currently not available.**
+
+
 
 
 
@@ -419,12 +504,51 @@ SELECT * FROM books
 WHERE isbn = '978-0-375-41398-8';
 
 
-**Insights**
+
+
+**Business Insights**
+
+
+**Based on by category  books rented
+Classic: rental count "classic" books show higher engagement or revenue than "dystopian." This suggests a stable, loyal interest in "classic" books.
+Dystopian: With a value of 6, "dystopian" books are less in demand or generating less income compared to "classic." However, it might still be a valuable category for specific target audiences.**
+
+
+
+****Based on by category  generated  revenue**
+**
+With "classics" generating $726 and "history" $346, classics are a clear top performer in terms of income. This suggests strong customer interest and potentially high rental volume in the "classics" category**.
+
+**The history category, though lower in income, still contributes significantly, indicating steady demand but at a lower rental frequency or price,can keep discount pricing for this category for generating revenue**
+
+
+
+**Branch-Level Revenue Analysis:**
+
+**Branch 1: With 16 book issues and $105 in revenue, Branch 1 shows a relatively high level of activity and income. This indicates that this branch likely has a larger customer base or higher interest in the rental program.**
+
+**Branch 2: With 9 book issues and $50 in revenue, Branch 2 has lower activity and income compared to Branch 1. This suggests a smaller or less engaged customer base or a focus on lower-priced rentals.**
+
+
+
+
+**Business Insights from Top 3 Employee Data
+Employee Productivity and Performance:**
+
+**Laura Martinez , Michael Thompson and Jessica Taylor**
+
+**This data highlights how individual employee performance, branch-specific dynamics, and targeted training can optimize customer service and improve operational efficiency. Focusing on high-performers and recognizing their contributions not only builds morale but also allows for the replication of effective practices across the team, leading to consistent service quality and productivity across branches.**
 
 
 
 
 
 
-Conclusion
+**Conclusion
 This project demonstrates the application of SQL skills in creating and managing a library management system. It includes database setup, data manipulation, and advanced querying, providing a solid foundation for data management and analysis.
+
+The SQL Library Management System project effectively showcased the application of SQL skills in managing a comprehensive database for library operations. Key insights included the strong performance of "classic" books in terms of rental counts and revenue, while "dystopian" and "history" categories demonstrated opportunities for targeted marketing and pricing strategies.
+
+Branch analysis revealed that Branch 1 is more successful in engaging customers compared to Branch 2, indicating the need for strategic improvements in the latter. Additionally, insights gained from top-performing employees highlighted the importance of recognizing and replicating effective practices to enhance overall service quality.
+
+Throughout this project, I developed crucial SQL skills such as database design, complex query formulation, and performance optimization, which will be invaluable in future data management endeavors. The experience reinforced the importance of data-driven decision-making in optimizing library operations and improving customer engagement**
