@@ -8,6 +8,7 @@ Database: sql_project_p2**
 ![image](https://github.com/user-attachments/assets/06ec2a30-205b-403e-b698-3add9fc7bd45)
 
 
+**Description **
 
 
 This project demonstrates the implementation of a Library Management System using SQL. It includes creating and managing tables, performing CRUD operations, and executing advanced SQL queries. The goal is to showcase skills in database design, manipulation, and querying.
@@ -18,9 +19,13 @@ Table Creation: Created tables for branches, employees, members, books, issued s
 
 
 
+
 -- Library managment systerm project 2
 
+
+
 ***Creating Database and managing tables**
+
 
 
 
