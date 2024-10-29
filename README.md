@@ -4,6 +4,9 @@
 Level: Intermediate
 Database: sql_project_p2**
 
+[Uploading DALL·E 2024-10-29 17.22.31 - A peaceful, well-lit library interior with tall wooden bookshelves filled with books, soft warm lighting, and cozy seating areas. Large windows let in.webp…]()
+
+
 This project demonstrates the implementation of a Library Management System using SQL. It includes creating and managing tables, performing CRUD operations, and executing advanced SQL queries. The goal is to showcase skills in database design, manipulation, and querying.
 
 
