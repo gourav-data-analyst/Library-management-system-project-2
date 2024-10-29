@@ -1,8 +1,8 @@
 # Library-management-system-project-2
 
-Project Title: Library Management System
+**Project Title: Library Management System
 Level: Intermediate
-Database: library_db
+Database: sql_project_p2**
 
 This project demonstrates the implementation of a Library Management System using SQL. It includes creating and managing tables, performing CRUD operations, and executing advanced SQL queries. The goal is to showcase skills in database design, manipulation, and querying.
 
@@ -12,8 +12,12 @@ Table Creation: Created tables for branches, employees, members, books, issued s
 
 -- Library managment systerm project 2
 
+***creating and managing tables**
+
+'''SQL
 create database sql_project_p2; 
 use sql_project_p2;
+'''
 
 create table branch(
 branch_id varchar(10) primary key, 
@@ -71,7 +75,7 @@ return_book_isbn varchar(25)
 );
 
 
--- foreign key
+**-- foreign key**
 alter table issued_status
 add constraint fk_members
  foreign key (issued_member_id)
@@ -99,6 +103,8 @@ add constraint fk_issued_status
  foreign key (issued_id)
  references issued_status (
 issued_id);
+
+**performing CRUD operations**
 
 
 -- Task 1. Create a New Book Record -- "978-1-60129-456-2', 'To Kill a Mockingbird',
@@ -216,6 +222,7 @@ left join return_status  on return_status.issued_id=issued_status.issued_id
 where return_status.return_date is null  And  current_date()-issued_status.issued_date  > 30
 order by 1;
 
+**Executing advanced SQL**
 
 -- Task 14: Update Book Status on Return
 -- Write a query to update the status of books in the books table to "Yes" 
